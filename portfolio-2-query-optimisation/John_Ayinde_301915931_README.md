@@ -9,13 +9,13 @@ Write useful SQL queries for the Landmark Hotel system, inspect execution plans,
 - The benchmark uses a separate schema, `landmark_hotel_bench`, so generated test records do not affect the main hotel tables or Portfolio 3 reservation tests.
 
 ## Run order
-1. Run `John_Ayinde_301915931_P2_BusinessQueries.sql` and inspect each result.
-2. Run `John_Ayinde_301915931_P2_BenchmarkSetup.sql` once when ready. **It drops and recreates only `landmark_hotel_bench.payment_events`.** Do not run it if you have stored other work in that exact benchmark table.
-3. Run `John_Ayinde_301915931_P2_BaselineExplain.sql` and save the complete output.
-4. Run `John_Ayinde_301915931_P2_OptimizedExplain.sql` and save the complete output.
-5. Enter your actual results in `John_Ayinde_301915931_P2_PerformanceLog.csv` and complete `John_Ayinde_301915931_P2_PerformanceAnalysis.md`.
-6. Follow `evidence/John_Ayinde_301915931_P2_EvidenceREADME.md`.
-7. Optional: run `John_Ayinde_301915931_P2_BenchmarkCleanup.sql` to remove only the benchmark schema.
+1. Run `John_Ayinde_301915931_BusinessQueries.sql` and inspect each result.
+2. Run `John_Ayinde_301915931_BenchmarkSetup.sql` once when ready. **It drops and recreates only `landmark_hotel_bench.payment_events`.** Do not run it if you have stored other work in that exact benchmark table.
+3. Run `John_Ayinde_301915931_BaselineExplain.sql` and save the complete output.
+4. Run `John_Ayinde_301915931_OptimizedExplain.sql` and save the complete output.
+5. Enter your actual results in `John_Ayinde_301915931_PerformanceLog.csv` and complete `John_Ayinde_301915931_PerformanceAnalysis.md`.
+6. Follow `evidence/John_Ayinde_301915931_EvidenceREADME.md`.
+7. Optional: run `John_Ayinde_301915931_BenchmarkCleanup.sql` to remove only the benchmark schema.
 
 ## Query plan interpretation
 - `Seq Scan`: reads the table sequentially.

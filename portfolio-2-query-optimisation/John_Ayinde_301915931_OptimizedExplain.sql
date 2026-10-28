@@ -1,4 +1,4 @@
--- Run after saving John_Ayinde_301915931_P2_BaselineExplain.sql output.
+-- Run after saving John_Ayinde_301915931_BaselineExplain.sql output.
 -- Composite index supports equality on status, date range/order, and covers selected columns.
 CREATE INDEX IF NOT EXISTS idx_payment_events_status_paid_at
 ON landmark_hotel_bench.payment_events (payment_status, paid_at DESC)

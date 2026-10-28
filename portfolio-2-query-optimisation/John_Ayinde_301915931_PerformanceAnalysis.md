@@ -7,7 +7,7 @@
 - Operating system/device: [record your environment]
 - Tool: [pgAdmin Query Tool or psql]
 - Test date/time: [record]
-- Benchmark rows: [record output from `John_Ayinde_301915931_P2_BenchmarkSetup.sql`]
+- Benchmark rows: [record output from `John_Ayinde_301915931_BenchmarkSetup.sql`]
 
 ## Query under test
 ```sql
