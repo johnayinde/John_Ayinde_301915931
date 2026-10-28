@@ -1,4 +1,4 @@
--- Run these queries after schema.sql and seed.sql.
+-- Run these queries after John_Ayinde_301915931_P1_Schema.sql and John_Ayinde_301915931_P1_SampleData.sql.
 SET search_path TO landmark_hotel, public;
 
 -- 1. Show all rooms with their room categories.
