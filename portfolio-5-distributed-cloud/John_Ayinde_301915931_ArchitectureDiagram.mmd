@@ -1,0 +1,11 @@
+flowchart TD
+    U[Guests and Hotel Staff] --> APP[Hotel Application / API]
+    APP --> AUTH[Authentication and Authorisation]
+    AUTH --> PG[(PostgreSQL Primary<br/>Bookings, Rooms, Payments)]
+    PG -->|Replication stream| REPL[(Read Replica<br/>Read-only reports)]
+    APP -->|Flexible preferences| MONGO[(MongoDB<br/>Guest Preference Documents)]
+    PG --> BACKUP[Encrypted Backups / Object Storage]
+    REPL --> REPORTS[Management Reports]
+    MON[Monitoring, Logs and Alerts] --- PG
+    MON --- REPL
+    MON --- MONGO
