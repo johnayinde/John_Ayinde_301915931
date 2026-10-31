@@ -1,6 +1,6 @@
 # Portfolio 2 Commit Plan
 
-Suggested meaningful commits, made when each stage is complete:
+I used these commit points to keep the work in small, meaningful stages. Each commit should be made only after the stated work is complete and checked:
 1. `Add hotel business SQL queries`
 2. `Add isolated query benchmark dataset`
 3. `Capture baseline query plan`
