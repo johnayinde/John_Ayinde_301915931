@@ -1,48 +1,39 @@
-# Portfolio 1: Case Study - Landmark Hotel Reservation System
+# Portfolio 1: Landmark Hotel Reservation System
 
-## 1. Organisation and system
+## Purpose
 
-For this academic project, Landmark Hotel is represented by a simulated hotel reservation operation. The database is intended to support hotel staff in managing guests, room inventory, bookings and payments. The sample records used in this repository are fictional and are not actual hotel customer data.
+For this portfolio, I modelled the day-to-day reservation work of a fictional hotel called Landmark Hotel. The aim is to keep guest, room, booking and payment information in a structure that staff can use reliably. All records in the sample data are fictional.
 
-## 2. Users
+## Intended users
 
-- **Guests:** provide contact details and make reservations.
-- **Receptionists:** register guests, create bookings and assign rooms.
-- **Hotel managers:** review room usage and booking activity.
-- **Finance staff:** record and reconcile payments and prepare revenue reports.
+- Guests provide contact details and make reservations.
+- Reception staff register guests, create bookings and assign rooms.
+- Managers review room use and booking activity.
+- Finance staff record payments and prepare revenue reports.
 
-## 3. Data stored
+## Data in the system
 
-The relational database stores:
+The database stores guest contact details; room types and their standard rates; individual rooms and their operating status; bookings; room assignments and stay dates; and payment records. I kept the booking header separate from room assignments because one booking can cover more than one room.
 
-- Guest names, email addresses and phone numbers.
-- Room categories, descriptions, occupancy limits and standard rates.
-- Room numbers, room types, floors and operational status.
-- Booking references, guest links, booking timestamps and booking status.
-- Room assignments, stay dates, agreed nightly rates and reservation status.
-- Payment references, amounts, methods, statuses and timestamps.
+## Main tasks supported
 
-## 4. Main operations
-
-1. Register a guest and maintain their contact details.
-2. Add room categories and room inventory.
+1. Register a guest and update contact details.
+2. Maintain room types and room inventory.
 3. Create a booking for a guest.
-4. Assign one or more rooms to a booking with check-in and check-out dates.
-5. Check room availability for a requested date range.
+4. Add one or more rooms to that booking with the relevant stay dates and agreed rate.
+5. Check whether a room can be used for a requested date range.
 6. Record deposits, final payments, failed payments and refunds.
-7. Retrieve a guest's booking history and summarise bookings or revenue.
+7. Retrieve booking history and produce simple occupancy or revenue information.
 
-## 5. Scope and assumptions
+## Assumptions made in the design
 
-- Each booking belongs to one guest.
-- A booking may contain one or more room assignments.
-- Each room assignment refers to one room and one stay period.
-- Check-out dates are exclusive: a room checking out on a date may be assigned to another guest checking in on that same date, provided the previous stay has ended.
-- A room's operational status (in service, maintenance or out of service) is separate from date-specific availability.
-- A booking may have multiple payment records, for example a deposit followed by a final payment.
-- Room availability is determined from operational status and overlapping active reservations, not from the room's operational status alone.
-- All sample data is fictional and created for learning purposes.
+- A booking belongs to one guest, but it can have several room assignments.
+- A room assignment identifies one room and one stay period.
+- Check-out is exclusive. A guest checking out on a date does not prevent another guest from checking in on that same date.
+- A room being in service, under maintenance or out of service is different from its availability for a particular date.
+- A booking can have more than one payment, such as a deposit and a balance payment.
+- Availability depends on room status and active overlapping stays.
 
-## 6. Why a relational database?
+## Why I used PostgreSQL
 
-PostgreSQL is suitable because the system contains related entities, requires foreign-key integrity, benefits from constraints, and includes transactions such as booking a room and recording a payment. SQL also supports reporting and query optimisation activities in later portfolio tasks.
+This scenario has clear relationships between entities and needs rules that should be enforced by the database. PostgreSQL provides foreign keys, check constraints and transactions for those rules. It also gives me a basis for the query-planning and concurrency work in the later portfolios.

@@ -1,33 +1,29 @@
-# Landmark Hotel Reservation System - MIT 8103 Portfolio
+# Landmark Hotel Reservation System
 
-This repository is an academic project for MIT 8103 Advanced Database Systems. It uses a simulated Landmark Hotel reservation scenario and fictional sample records. Do not add real guest or payment information.
+This repository contains my MIT 8103 Advanced Database Systems portfolio. I used a fictional Landmark Hotel scenario so that I could design and test a realistic reservation database without using real guest or payment information.
 
-## Project scope
+The portfolio starts with a PostgreSQL design, then builds on it with query optimisation, transaction and concurrency work, a small MongoDB use case, and a proposed distributed/cloud design.
 
-The system models guests, room types, rooms, bookings, room assignments and payments. One booking can include multiple room assignments. The relational implementation uses PostgreSQL. A MongoDB model can be added for Portfolio 4.
+## What the system covers
 
-## Repository structure
+The relational model covers guests, room types, rooms, bookings, room assignments and payments. A booking can include more than one room assignment. PostgreSQL is used for the core reservation data because the booking and payment processes need relationships, constraints and transactions. Portfolio 4 uses MongoDB only for flexible guest-preference data.
 
-- `portfolio-1-database-design/` - case study, ER diagram, schema, sample data, validation queries and normalisation notes.
-- `portfolio-2-query-optimisation/` - add this folder when starting Portfolio 2.
-- `portfolio-3-transactions-concurrency/` - add this folder when starting Portfolio 3.
-- `portfolio-4-nosql/` - add this folder when starting Portfolio 4.
-- `portfolio-5-distributed-cloud/` - add this folder when starting Portfolio 5.
+## Portfolio folders
 
-## Requirements
+- `portfolio-1-database-design/` — case study, ER diagram, PostgreSQL schema, sample data, validation queries and normalisation notes.
+- `portfolio-2-query-optimisation/` — business queries, an isolated benchmark, execution plans and performance analysis.
+- `portfolio-3-transactions-concurrency/` — commit/rollback and double-booking prevention tests.
+- `portfolio-4-nosql/` — MongoDB guest-profile model and query scripts.
+- `portfolio-5-distributed-cloud/` — proposed distributed/cloud architecture and its trade-offs.
 
-- PostgreSQL 14 or later recommended.
-- pgAdmin or `psql` to run the SQL scripts.
+## Running Portfolio 1
 
-## Run Portfolio 1
+I recommend PostgreSQL 14 or later and either pgAdmin or `psql`.
 
-1. Create a database named `landmark_hotel_db` in pgAdmin or with `createdb landmark_hotel_db`.
-2. Run `portfolio-1-database-design/John_Ayinde_301915931_Schema.sql` against that database.
+1. Create a database called `landmark_hotel_db`.
+2. Run `portfolio-1-database-design/John_Ayinde_301915931_Schema.sql`.
 3. Run `portfolio-1-database-design/John_Ayinde_301915931_SampleData.sql`.
-4. Run `portfolio-1-database-design/John_Ayinde_301915931_ConstraintTests.sql` and inspect the results.
-5. Save your own screenshots of successful execution and results in an `evidence/` folder. Only add screenshots after you have actually run the scripts.
-
-Command-line example:
+4. Run `portfolio-1-database-design/John_Ayinde_301915931_ConstraintTests.sql` and review the output.
 
 ```bash
 createdb landmark_hotel_db
@@ -36,11 +32,6 @@ psql -d landmark_hotel_db -f portfolio-1-database-design/John_Ayinde_301915931_S
 psql -d landmark_hotel_db -f portfolio-1-database-design/John_Ayinde_301915931_ConstraintTests.sql
 ```
 
-If your PostgreSQL installation uses a username or port different from the defaults, add the appropriate `psql` connection options.
+The ER diagram source is `portfolio-1-database-design/John_Ayinde_301915931_ERDiagram.mmd`. The basic schema handles keys and data checks. The PostgreSQL exclusion constraint that prevents overlapping active stays is introduced separately in Portfolio 3, where I demonstrate the concurrency rule.
 
-## Important notes
-
-- The ER diagram source is `portfolio-1-database-design/John_Ayinde_301915931_ERDiagram.mmd` (Mermaid ER diagram). You can render it in a Mermaid-compatible editor or GitHub Markdown.
-- The schema intentionally uses explicit foreign keys and check constraints.
-- The base schema checks data integrity but does not yet include the advanced PostgreSQL exclusion constraint for preventing overlapping room reservations. That is a good practical extension for Portfolio 3, where you will demonstrate transaction and concurrency controls.
-- Keep commits progressive and explain the work in your own words. Review and test every script before submission.
+All screenshots in this portfolio should come from my own test runs. The repository contains fictional data only.

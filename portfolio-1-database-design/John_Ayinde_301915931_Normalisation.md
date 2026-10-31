@@ -1,27 +1,30 @@
 # Normalisation Notes
 
+I normalised the hotel data so that each table has one clear purpose and changes to one type of information do not create inconsistent copies elsewhere.
+
 ## First Normal Form (1NF)
 
-Each table has a primary key and each field stores one value rather than a list of values. For example, a guest's email and phone are separate columns, and multiple rooms assigned to a booking are represented by separate rows in `booking_rooms` rather than a comma-separated list in `bookings`.
+Each table has a primary key and each column holds one value. For example, rooms on a booking are not kept as a comma-separated list in `bookings`; each assignment is a separate row in `booking_rooms`.
 
 ## Second Normal Form (2NF)
 
-The tables use single-column primary keys. Non-key attributes describe the entity represented by that key. Room details are not mixed with guest details, and payment attributes are not stored in the booking header. The `booking_rooms` table represents each room assignment as its own row.
+Each table uses a single-column primary key, and its non-key columns describe that record. Guest details are not mixed with room details, and payment information is not stored in the booking header. The `booking_rooms` table exists because a room assignment has its own dates, rate and status.
 
 ## Third Normal Form (3NF)
 
-Non-key attributes are stored with the entity they describe. Guest names and contact details are in `guests`; room category descriptions and standard rates are in `room_types`; individual room numbers and operational status are in `rooms`; booking-level details are in `bookings`; stay dates and the agreed nightly rate are in `booking_rooms`; and payment details are in `payments`.
+Details are stored with the entity they describe: guest data in `guests`, room-type details in `room_types`, room inventory in `rooms`, booking-level information in `bookings`, stay details in `booking_rooms`, and payments in `payments`.
 
-The agreed `nightly_rate` in `booking_rooms` is a historical rate for that specific stay. It is intentionally stored separately from the current standard rate in `room_types`, because the price agreed for a booking should not change automatically when the hotel's standard rate changes.
+The `nightly_rate` in `booking_rooms` is intentional. It records the rate agreed for that stay, which should not change if the current standard rate in `room_types` changes later.
 
-## Avoiding unnecessary duplication
+## Avoiding duplication
 
-- Guest contact information is stored once in `guests` and referenced by `guest_id`.
-- Room type information is stored once in `room_types` and referenced by `room_type_id`.
-- Booking details are stored once in `bookings` and referenced by `booking_id`.
-- Payment details are stored in `payments`, allowing multiple payments for one booking.
-- A booking total can be calculated from its room assignments and payments when needed rather than copied into several tables. If taxes, discounts or a locked final total are introduced later, their rules should be modelled explicitly.
+- Guest contact details are stored once and linked through `guest_id`.
+- Room-type details are stored once and linked through `room_type_id`.
+- Booking details are stored once and linked through `booking_id`.
+- Payments are separate records so one booking can have a deposit, balance payment or refund.
 
-## Conclusion
+Booking totals can be calculated from room assignments and payments when needed. If the system later needs taxes, discounts or a final locked total, those rules should be stored explicitly rather than copied into unrelated tables.
 
-The design separates entities and their relationships to reduce update anomalies and improve data integrity. Primary keys identify records, foreign keys enforce relationships, and check/unique constraints prevent several categories of invalid data. The design should be tested with realistic examples before submission.
+## Summary
+
+Separating the data this way reduces update anomalies and makes the integrity rules easier to enforce. Primary keys identify rows, foreign keys maintain relationships, and constraints reject invalid values.

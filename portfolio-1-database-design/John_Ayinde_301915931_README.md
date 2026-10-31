@@ -1,26 +1,21 @@
-# Portfolio 1 - Database Design and Modelling
+# Portfolio 1: Database Design and Modelling
+
+This folder contains the foundation of the Landmark Hotel database.
 
 ## Files
 
-- `John_Ayinde_301915931_Design.md`: organisation, users, data and operations.
-- `John_Ayinde_301915931_ERDiagram.mmd`: editable Mermaid ER diagram source.
-- `John_Ayinde_301915931_Schema.sql`: PostgreSQL tables, primary keys, foreign keys, checks and indexes.
-- `John_Ayinde_301915931_SampleData.sql`: fictional sample records.
-- `John_Ayinde_301915931_ConstraintTests.sql`: queries to confirm that the model works.
-- `John_Ayinde_301915931_Normalisation.md`: 1NF, 2NF and 3NF explanation.
+- `John_Ayinde_301915931_Design.md` — the business case, users, data and assumptions.
+- `John_Ayinde_301915931_ERDiagram.mmd` — editable Mermaid ER diagram.
+- `John_Ayinde_301915931_Schema.sql` — PostgreSQL tables, keys, checks and indexes.
+- `John_Ayinde_301915931_SampleData.sql` — fictional test data.
+- `John_Ayinde_301915931_ConstraintTests.sql` — queries used to check the model.
+- `John_Ayinde_301915931_Normalisation.md` — the 1NF, 2NF and 3NF discussion.
 
-## Implementation steps
+## How I tested it
 
-1. Create a PostgreSQL database named `landmark_hotel_db`.
-2. Run `John_Ayinde_301915931_Schema.sql`.
-3. Run `John_Ayinde_301915931_SampleData.sql`.
-4. Run each query in `John_Ayinde_301915931_ConstraintTests.sql` and check the result.
-5. Capture screenshots of the SQL execution and results in a local `evidence/` folder.
-6. Update this README with your PostgreSQL version, the date you tested the scripts, any changes you made, and a short explanation of what you observed.
+1. I created a test database named `landmark_hotel_db`.
+2. I ran the schema script, followed by the sample-data script.
+3. I ran the validation queries and reviewed the returned rows.
+4. I saved screenshots of the ER diagram, table creation, table structure and sample data in `evidence/`.
 
-## Evidence to capture
-
-- ER diagram rendered from `John_Ayinde_301915931_ERDiagram.mmd`.
-- Successful table creation in pgAdmin or `psql`.
-- Table structure showing primary and foreign keys.
-- Sample rows from guests, rooms, bookings, booking_rooms and payments.
+The evidence should show the PostgreSQL version, test date and tool used when the work is submitted.
