@@ -1,10 +1,10 @@
-# NoSQL Model and Suitability
+# Portfolio 4: MongoDB Guest Preference Model
 
-## Selected model
-MongoDB document database. Collection: `guest_profiles`.
+I used MongoDB for guest preferences rather than for the hotel’s core reservation records. Preferences can differ greatly between guests and may gain new fields over time, so a document model fits this part of the system well.
 
-## Example document shape
-A profile document uses a stable `guest_email` reference and nests preferences and notification settings:
+## Collection and document structure
+
+The collection is called `guest_profiles`. Each document uses the guest's email address as an example reference to the PostgreSQL `guests.email` value, then groups related preferences and notification settings together.
 
 ```json
 {
@@ -24,22 +24,21 @@ A profile document uses a stable `guest_email` reference and nests preferences a
 }
 ```
 
-The sample profile is fictional. The setup script adds `created_at` and `updated_at` timestamps and configures MongoDB schema validation.
+The sample email and preferences are fictional. The setup script adds `created_at` and `updated_at`, validates the main document shape, and creates a unique index on `guest_email`.
 
-## Why a document model?
-- Preference fields can vary by guest and may evolve over time.
-- Nested arrays and objects naturally represent preferences and notification settings.
-- A unique index on `guest_email` supports lookup and prevents duplicate profiles.
-- The model is straightforward to query by preferred room type or accessibility needs.
+## Why this is suitable
 
-## Why not store everything in MongoDB?
-The project keeps core bookings, room assignments and payments in PostgreSQL because they use relational constraints and transactional rules. Duplicating those core records across two systems would introduce synchronisation and consistency work. MongoDB is used here for flexible guest preference documents, not as the source of truth for payment processing or room allocation.
+- Guests will not all have the same preference fields.
+- Related arrays and nested settings can be read and updated together.
+- The unique email index supports direct lookups and prevents duplicate profile documents.
+- The structure supports queries such as finding guests who prefer a room type or need accessibility support.
 
-## Relationship to the relational database
-`guest_email` matches the unique `guests.email` value in PostgreSQL. This is an application-level reference; MongoDB does not enforce a foreign key to PostgreSQL. A production integration would need an explicit synchronization policy and failure handling.
+## Why bookings remain in PostgreSQL
 
-## Limitations and security
-- Email is used as a stable example key for the portfolio; production systems should use carefully governed identifiers and access controls.
-- Do not store payment-card data or sensitive personal information in this sample collection.
-- Use database authentication, least-privilege roles, encrypted connections and appropriate backup policies in any real deployment.
-- Document validation helps maintain shape but does not replace business rules or authorization.
+Bookings, room assignments and payments need referential integrity and transaction rules, especially the rule against overlapping active room reservations. Moving those records to a separate document database would add synchronisation and consistency problems without helping this small use case. PostgreSQL remains the source of truth for that data.
+
+## Relationship and limits
+
+MongoDB does not enforce a foreign key to PostgreSQL, so the email reference is managed by the application. In a real system, I would define how profile creation, changes and failures are handled between the two databases.
+
+This portfolio does not use real guest data, card details, passwords or connection strings. A production version would also need authentication, least-privilege roles, encrypted connections and tested backups.
