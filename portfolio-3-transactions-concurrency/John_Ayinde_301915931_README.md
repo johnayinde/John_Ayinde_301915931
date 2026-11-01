@@ -1,30 +1,24 @@
-# Portfolio 3 — Transactions and Concurrency
+# Portfolio 3: Transactions and Concurrency
 
-## Objective
-Demonstrate transaction commit/rollback and a control that prevents overlapping active reservations for the same room.
+This portfolio focuses on two database behaviours that matter in a hotel system: whether a transaction is saved or reversed, and whether two users can reserve the same room for overlapping dates.
 
-## Prerequisites
-- Portfolio 1 schema and seed data are loaded.
-- Use a local/test `landmark_hotel_db`, not a production database.
-- Run `John_Ayinde_301915931_CommitRollbackDemo.sql` first.
-- Run `John_Ayinde_301915931_OverlapConstraint.sql` before the concurrency lab.
+## Files in this folder
 
-## Files
-- `John_Ayinde_301915931_CommitRollbackDemo.sql` — committed test payment and rolled-back booking update.
-- `John_Ayinde_301915931_OverlapConstraint.sql` — exclusion constraint using `btree_gist` and a half-open date range.
-- `John_Ayinde_301915931_ConcurrencyLab.md` — exact two-session test instructions.
-- `John_Ayinde_301915931_SessionA.sql` and `John_Ayinde_301915931_SessionB.sql` — statements for two separate query sessions.
-- `John_Ayinde_301915931_TestRecordCleanup.sql` — removes only the test records created by this lab.
-- `John_Ayinde_301915931_Results.md` — report your actual observed results.
-- `evidence/John_Ayinde_301915931_EvidenceREADME.md` — screenshots to collect.
+- `John_Ayinde_301915931_CommitRollbackDemo.sql` — shows one committed payment and one booking update that is rolled back.
+- `John_Ayinde_301915931_OverlapConstraint.sql` — adds the PostgreSQL exclusion constraint used to stop active overlapping stays.
+- `John_Ayinde_301915931_ConcurrencyLab.md` — instructions for the two-session test.
+- `John_Ayinde_301915931_SessionA.sql` and `John_Ayinde_301915931_SessionB.sql` — the statements for each database session.
+- `John_Ayinde_301915931_TestRecordCleanup.sql` — removes records created by the demonstration.
+- `John_Ayinde_301915931_Results.md` — where I record the actual results after testing.
 
-## Commit and rollback demo
-Run `John_Ayinde_301915931_CommitRollbackDemo.sql`. The payment record with reference `P3-DEMO-COMMIT-001` is committed and can be removed with the cleanup script. A temporary update to a booking is shown inside a transaction and then rolled back; after rollback the original value should remain.
+## What I am testing
 
-## Reservation overlap protection
-The exclusion constraint prevents active reservations for the same room from overlapping in date range. The range uses `[check_in, check_out)`, meaning checkout day is not occupied; a guest can check out on the same date the next guest checks in.
+I first run the commit/rollback script. The payment with reference `P3-DEMO-COMMIT-001` should remain after `COMMIT`. The booking update is made inside a separate transaction and then reversed with `ROLLBACK`, so the original value should remain.
 
-The constraint blocks overlap for `pending`, `confirmed` and `checked_in` assignments. The lab requires the `btree_gist` extension. If you lack permission to install it, do not silently skip the requirement: capture the error and discuss an alternative control mechanism with your lecturer.
+I then add `ex_booking_rooms_no_active_overlap` to `landmark_hotel.booking_rooms`. It checks both `room_id` and a half-open date range, `[check_in, check_out)`. This means that a checkout date is available for the next guest's check-in, while genuinely overlapping stays are rejected.
 
-## Concurrency lab warning
-Use two separate pgAdmin Query Tool sessions connected to the same test database. Session A must remain open in an uncommitted transaction while Session B attempts the conflicting insert. Follow `John_Ayinde_301915931_ConcurrencyLab.md` exactly, then clean up the test records.
+The rule applies only to `pending`, `confirmed` and `checked_in` assignments. It needs the `btree_gist` extension. If I cannot create that extension in my test environment, I will record the error rather than claim that the constraint was installed.
+
+## Test setup
+
+Portfolio 1 must be loaded into a test copy of `landmark_hotel_db`. The concurrency demonstration needs two pgAdmin Query Tool sessions connected to that same database. I run the overlap-constraint script before opening the two-session test, then use the cleanup script after both sessions have finished.

@@ -1,24 +1,31 @@
-# Portfolio 3 — Results and Reflection
+# Portfolio 3: Results and Reflection
 
-## Environment
+I will complete this page from my own test output after running the scripts.
+
+## Test environment
+
 - PostgreSQL version: [fill in]
-- Tool: [pgAdmin / psql]
+- Tool used: [pgAdmin or psql]
 - Test date: [fill in]
 
-## Commit demonstration
-- What record was committed? [describe the test payment]
-- Did the committed record remain visible after COMMIT? [actual result]
+## Commit test
 
-## Rollback demonstration
-- What value was changed temporarily? [describe]
-- What did the SELECT show inside the transaction? [actual result]
-- What did the SELECT show after ROLLBACK? [actual result]
+- Record committed: [describe the test payment]
+- Result after `COMMIT`: [actual result]
 
-## Concurrency demonstration
-- Did Session B wait while Session A was uncommitted? [actual result]
-- What happened after Session A committed? [actual error/result]
-- Which constraint enforced the rule? [constraint name]
-- Why does the half-open date range allow back-to-back reservations? [explain]
+## Rollback test
+
+- Value changed temporarily: [describe]
+- Result inside the transaction: [actual result]
+- Result after `ROLLBACK`: [actual result]
+
+## Concurrency test
+
+- Did Session B wait while Session A was open? [actual result]
+- What happened after Session A committed? [actual error or result]
+- Constraint that enforced the rule: [constraint name]
+- Why can one guest check out while another checks in on the same date? [explain]
 
 ## Reflection
-[Write in your own words what the exercise taught you about atomicity, transaction boundaries and concurrent booking attempts.]
+
+[Write a short reflection in my own words about transaction boundaries, commit/rollback, and the concurrent booking attempt.]
