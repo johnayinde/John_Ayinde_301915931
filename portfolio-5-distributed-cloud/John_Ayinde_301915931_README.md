@@ -1,17 +1,18 @@
-# Portfolio 5 — Distributed and Cloud Database Exercise
+# Portfolio 5: Distributed and Cloud Database Exercise
 
-## Objective
-Explain how the Landmark Hotel system could be deployed and operated with distributed/cloud database capabilities. The assessment permits a discussion or setup. The included files describe a proposed architecture; they do not claim that a live cloud deployment has been performed.
+This portfolio explains how I would extend the Landmark Hotel system for a distributed or cloud environment. I have labelled the material as a proposed design because it does not represent a live deployment.
 
 ## Files
-- `John_Ayinde_301915931_Architecture.md` — proposed deployment and design choices.
-- `John_Ayinde_301915931_ArchitectureDiagram.mmd` — architecture diagram source.
-- `John_Ayinde_301915931_ReplicationAndSharding.md` — replication, consistency, availability, sharding and recovery discussion.
-- `evidence/John_Ayinde_301915931_EvidenceREADME.md` — evidence checklist.
 
-## What to do
-1. Read both design documents.
-2. Render `John_Ayinde_301915931_ArchitectureDiagram.mmd` and save a readable image.
-3. Make sure you can explain primary/replica roles, replication lag, backups, access control and why the booking/payment source of truth remains transactional.
-4. If you implement an actual cloud or replication setup, add your own configuration evidence and describe what you tested. Never publish credentials.
-5. Clearly label the portfolio as a proposed design if you did not deploy it.
+- `John_Ayinde_301915931_Architecture.md` — the proposed components, request flow and design limits.
+- `John_Ayinde_301915931_ArchitectureDiagram.mmd` — the editable Mermaid architecture diagram.
+- `John_Ayinde_301915931_ReplicationAndSharding.md` — replication, consistency, availability, sharding and recovery choices.
+- `evidence/John_Ayinde_301915931_EvidenceREADME.md` — the evidence expected for the discussion or implementation option.
+
+## What to review
+
+1. Render `John_Ayinde_301915931_ArchitectureDiagram.mmd` and save a readable image.
+2. Use the two design documents to explain the primary/replica roles, replication lag, backup purpose, access controls and transactional source of truth.
+3. If I implement a cloud or replica setup, add only the configuration and test evidence I actually produced, with secrets removed.
+
+The discussion-based design must remain clearly labelled as a proposal unless there is real implementation evidence.

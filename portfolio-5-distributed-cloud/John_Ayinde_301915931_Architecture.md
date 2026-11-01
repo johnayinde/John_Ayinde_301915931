@@ -1,43 +1,39 @@
-# Proposed Distributed and Cloud Architecture
+# Portfolio 5: Proposed Distributed and Cloud Architecture
 
-## Status
-This is a **proposed academic architecture**, not a statement that Landmark Hotel's live systems use these components. Add actual deployment details only if you personally implement and verify them.
+## Scope of this portfolio
 
-## Requirements
-The hotel system needs reliable booking and payment records, responsive room searches, reporting, recovery from failures and protection of guest information. The system must not allow two concurrent active reservations for the same room and dates.
+This is my proposed architecture for the Landmark Hotel system. It is a design exercise, not a claim that I have deployed a production cloud system or completed a failover test. If I add real deployment evidence later, I will identify exactly what I configured and tested.
 
-## Proposed components
-1. **Application/API layer:** Authenticates users, validates requests and separates guest, receptionist, manager and finance permissions.
-2. **PostgreSQL primary:** Source of truth for guests, room inventory, bookings, room assignments and payments. Booking/payment writes use database transactions and constraints.
-3. **PostgreSQL read replica:** Receives replicated data and serves suitable read-only reporting workloads. Replication lag may mean a report is briefly behind the primary.
-4. **MongoDB guest profiles:** Stores flexible preferences and notification settings. PostgreSQL remains the source of truth for bookings, room allocation and payments.
-5. **Encrypted backups:** Scheduled database backups stored separately from the primary environment, with retention and restore tests.
-6. **Monitoring and logging:** Tracks availability, replication lag, storage, query latency, errors and failed login attempts.
-7. **Network/security controls:** TLS in transit, least-privilege database roles, secrets management, network restrictions and audited administrative access.
+## What the design needs to protect
 
-## Request flow
-- Booking creation and payment-status updates go to PostgreSQL primary.
-- Availability checks read current PostgreSQL data and must apply overlap logic/constraints.
-- Reporting queries may use the read replica if a short delay is acceptable.
-- Guest preference reads/writes use MongoDB, with an explicit policy for profile updates and application-level association to the PostgreSQL guest record.
-- Backups are not a substitute for replication, and replication is not a substitute for backups.
+The most sensitive operations are creating bookings, assigning rooms and recording payments. The design must avoid two active reservations for the same room and dates, protect guest information, keep data recoverable, and still allow managers to run reports.
 
-## Availability and recovery
-A production design should define recovery point objective (RPO) and recovery time objective (RTO), monitor replication health, test restore procedures, and document how a replica would be promoted if the primary fails. Failover must avoid split-brain writes. The exact RPO/RTO cannot be claimed until an actual platform and configuration are selected and tested.
+## Main components
 
-## Consistency choices
-Bookings, room allocation and payments need strong transactional correctness. Reporting can tolerate a replica being slightly behind if the report is labelled/understood as read-only and potentially stale. Flexible preference data can tolerate asynchronous propagation only if the application accepts and handles that trade-off.
+1. **Application/API** — authenticates users, validates requests and applies separate permissions for guests, reception, management and finance.
+2. **PostgreSQL primary** — holds the authoritative guest, room, booking, room-assignment and payment data. Booking and payment writes use transactions and database constraints.
+3. **PostgreSQL read replica** — serves read-only reports where a small delay is acceptable. A report may be behind the primary while replication catches up.
+4. **MongoDB guest profiles** — holds flexible preferences and notification settings only. It is not the source of truth for bookings, room allocation or payments.
+5. **Backups** — encrypted backups are stored separately and need retention rules plus regular restore tests.
+6. **Monitoring and logging** — tracks availability, storage, replication lag, slow queries, errors and failed sign-in attempts.
+7. **Security controls** — TLS, restricted network access, least-privilege roles, managed secrets and audited administration.
 
-## Scaling
-Start with a well-indexed PostgreSQL database and a read replica for read-heavy reporting if workload justifies it. Do not shard a small hotel database without evidence of a scaling need. If growth eventually requires sharding, a property/region key could be evaluated, but cross-property reservations, global reports, rebalancing and cross-shard transactions add complexity.
+## How requests are handled
 
-## Security
-- Use distinct database roles for the application, reporting and administrators.
-- Grant only the permissions required for each role.
-- Encrypt network traffic and backups.
-- Store secrets outside GitHub.
-- Monitor and audit privileged access.
-- Avoid real guest/payment data in the academic portfolio.
+Booking creation, room assignment and payment changes go to the PostgreSQL primary. Availability checks must use current primary data and the overlap rule. Read-heavy reports can use the replica when the user accepts that the result may be slightly behind. MongoDB handles preference changes through the application, which must also manage the link to the PostgreSQL guest record.
 
-## Limitations
-This document describes a design. It is not evidence of a real cloud deployment or tested failover. If no cloud deployment is performed, say so clearly and submit the diagram plus the reasoned design discussion as the permitted discussion-based exercise.
+Replication does not replace backups, and backups do not provide a live replica. Both are needed for different failure scenarios.
+
+## Recovery and consistency
+
+A real deployment would need stated recovery point and recovery time targets, monitoring for replication health, tested restores, and a documented promotion process if the primary fails. The promotion process must avoid two nodes accepting conflicting writes.
+
+For this hotel scenario, bookings, room allocation and payments need strong transactional correctness. Reporting can tolerate a small amount of replica lag when that limitation is understood. Preference data may tolerate asynchronous handling only when the application can handle a delayed or failed update.
+
+## Scaling decision
+
+I would begin with a properly indexed PostgreSQL primary and add a read replica only when reporting load requires it. Sharding is not justified by this single-hotel sample dataset. If the business later expanded across many properties, property or region could be evaluated as a shard key, but cross-property reports, rebalancing and cross-shard transactions would need careful design.
+
+## Limitation
+
+This document explains a reasoned design. It is not evidence of a live deployment, replication configuration or tested failover.

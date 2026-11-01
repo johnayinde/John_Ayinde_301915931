@@ -1,33 +1,32 @@
 # Replication, Sharding, Availability and Consistency
 
 ## Replication
-Replication maintains copies of data on different database instances. In the proposed design, PostgreSQL primary handles writes and a read replica supports reporting.
 
-- **Synchronous replication:** A commit may wait for acknowledgement from a synchronous standby, strengthening durability across nodes but potentially increasing latency or reducing write availability during failures.
-- **Asynchronous replication:** The primary can acknowledge a commit before the replica receives it, improving write responsiveness but allowing replication lag and possible loss of the latest acknowledged changes in some failure scenarios.
-- **Monitoring:** Track replica status and lag; test promotion and recovery procedures.
-- **Important distinction:** Replicas improve availability/read scaling but do not replace independent backups.
+In my proposed design, PostgreSQL primary accepts writes and a read replica supports reporting. Replication gives another copy of the data for read scaling and resilience, but it is not a replacement for an independent backup.
+
+- **Synchronous replication** makes a commit wait for a standby acknowledgement. This can strengthen durability across nodes, but it can add latency and affect write availability during a failure.
+- **Asynchronous replication** lets the primary acknowledge a commit before the replica has it. This is usually more responsive, but the replica can lag and the most recent acknowledged changes may be at risk in some failures.
+- In either case, replica status, lag, promotion and recovery should be monitored and tested.
 
 ## Sharding
-Sharding splits data across multiple database partitions or nodes. It can distribute storage and workload, but adds routing, rebalancing, operational and cross-shard query complexity.
 
-For a small single-hotel academic system, sharding is not justified by the sample data. If the business expanded to many properties and the data volume required it, a property or region key could be evaluated as a shard key. The design would need to handle cross-property reporting and any booking operations that span shards.
+Sharding splits data between database nodes. It can help at much larger scale, but it also creates routing, rebalancing and cross-shard query problems.
 
-## Availability and CAP-style trade-offs
-During a network partition, a distributed system may have to choose between rejecting/delaying some operations to protect consistency or continuing to serve requests that may be stale. For hotel reservations, avoiding double-booking is more important than accepting a possibly conflicting reservation. For non-critical preference display or analytics, a short delay may be acceptable.
+For this single-hotel academic system, I would not shard the sample data. If a future version supported many properties with enough volume to justify it, property or region could be considered as a shard key. The design would then need a clear approach for cross-property reporting and any booking operation that crosses shards.
 
-## ACID and eventual consistency
-- PostgreSQL transactions and constraints provide the primary consistency boundary for booking/payment operations.
-- Read replicas may be slightly behind the primary if asynchronous replication is used.
-- MongoDB guest preferences are separate from the PostgreSQL booking transaction; the application must define how updates are coordinated and how partial failures are handled.
-- Do not claim that a transaction across PostgreSQL and MongoDB is atomic unless a real distributed transaction mechanism is implemented and verified.
+## Availability and consistency
 
-## Evidence to capture if implemented
-- Actual deployment/connection configuration with secrets removed.
-- Database version and node/replica status.
-- Replication status/lag output.
-- A read-only query against the replica.
-- A backup and restore test result.
-- Any failover test performed in a safe test environment.
+During a network partition, a distributed system may need to delay or reject some requests to avoid accepting inconsistent writes. For room reservations, preventing a double booking is more important than accepting a booking that could conflict. A short delay is more acceptable for analytics or displaying non-critical preferences.
 
-If you do not implement a live distributed setup, label this as a design proposal and explain the trade-offs instead of fabricating deployment evidence.
+PostgreSQL transactions and constraints are therefore the main consistency boundary for bookings and payments. A read replica can be slightly behind when asynchronous replication is used. MongoDB preferences are outside the PostgreSQL booking transaction, so the application must define what happens if one system succeeds and the other fails. I do not claim cross-database atomicity because this portfolio does not implement or test a distributed transaction mechanism.
+
+## Evidence if I implement the design
+
+- deployment configuration with credentials removed;
+- database version plus primary/replica status;
+- replication lag output;
+- a read-only query against the replica;
+- backup and restore results; and
+- any safe failover test performed.
+
+Without those tests, this remains a design proposal rather than a deployed solution.
