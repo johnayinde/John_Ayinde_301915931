@@ -1,5 +1,5 @@
--- Run after both concurrency sessions have ended or been rolled back.
--- Removes only test records created by Portfolio 3.
+-- Use this after both sessions are complete or rolled back.
+-- It removes only the records created for this demonstration.
 BEGIN;
 
 DELETE FROM landmark_hotel.booking_rooms br

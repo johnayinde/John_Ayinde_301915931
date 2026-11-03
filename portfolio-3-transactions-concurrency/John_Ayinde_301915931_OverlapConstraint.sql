@@ -1,5 +1,5 @@
--- Run once against landmark_hotel_db after Portfolio 1 seed data.
--- Requires permission to create the btree_gist extension.
+-- Adds the overlap rule after the Portfolio 1 sample data is loaded.
+-- Creating btree_gist requires the relevant database permission.
 CREATE EXTENSION IF NOT EXISTS btree_gist;
 
 DO $$
@@ -23,7 +23,7 @@ BEGIN
     END IF;
 END $$;
 
--- Verify the constraint exists.
+-- Confirm that PostgreSQL created the constraint.
 SELECT conname, pg_get_constraintdef(oid) AS definition
 FROM pg_constraint
 WHERE conrelid = 'landmark_hotel.booking_rooms'::regclass
