@@ -1,5 +1,5 @@
-// Portfolio 4: MongoDB document model for fictional hotel guest preferences.
-// Run with mongosh. This script uses only fictional example data.
+// MongoDB setup for fictional Landmark Hotel guest preferences.
+// The data below is for this portfolio only.
 const hotelDb = db.getSiblingDB('landmark_hotel_nosql');
 
 const validator = {

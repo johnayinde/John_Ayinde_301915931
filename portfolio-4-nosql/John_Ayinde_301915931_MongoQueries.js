@@ -1,4 +1,4 @@
-// Portfolio 4: run after John_Ayinde_301915931_MongoSetup.js using mongosh.
+// Queries for the guest profile collection after the setup script has run.
 const hotelDb = db.getSiblingDB('landmark_hotel_nosql');
 
 print('\n1. All guest profiles (excluding MongoDB internal _id):');
