@@ -1,5 +1,5 @@
--- Run after John_Ayinde_301915931_BenchmarkSetup.sql. Save the entire plan output as baseline evidence.
--- This removes only the index created by the optimised test, if it exists.
+-- This is the baseline plan, run after the benchmark setup.
+-- It removes the test index from the later comparison before collecting the plan.
 DROP INDEX IF EXISTS landmark_hotel_bench.idx_payment_events_status_paid_at;
 ANALYZE landmark_hotel_bench.payment_events;
 

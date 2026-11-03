@@ -1,6 +1,5 @@
--- Portfolio 2 benchmark setup.
--- IMPORTANT: This resets only the dedicated benchmark table in schema landmark_hotel_bench.
--- It does not insert benchmark records into the operational landmark_hotel tables.
+-- Builds the isolated benchmark used for the Portfolio 2 comparison.
+-- This resets only landmark_hotel_bench.payment_events, not the hotel tables.
 
 CREATE SCHEMA IF NOT EXISTS landmark_hotel_bench;
 DROP TABLE IF EXISTS landmark_hotel_bench.payment_events;
@@ -14,7 +13,7 @@ CREATE TABLE landmark_hotel_bench.payment_events (
     paid_at TIMESTAMPTZ NOT NULL
 );
 
--- 200,000 fictional records with a distribution suitable for testing a selective filter.
+-- Fictional payment events with enough rows to test a selective query.
 INSERT INTO landmark_hotel_bench.payment_events
     (booking_reference, amount, payment_status, payment_method, paid_at)
 SELECT 'BENCH-' || lpad(s.i::text, 8, '0'),
