@@ -1,8 +1,9 @@
 # Portfolio 5 Evidence
 
-For the discussion-based option, I will provide:
-- `John_Ayinde_301915931_Architecture.png` — rendered `John_Ayinde_301915931_ArchitectureDiagram.mmd` diagram.
-- `John_Ayinde_301915931_ReplicationStrategy.png` or PDF — a readable summary of primary/replica and backup roles.
-- `John_Ayinde_301915931_ConsistencyTradeoffs.png` — a table/diagram you created explaining which operations require strong consistency and which can tolerate lag.
+This is discussion-based evidence for the proposed architecture. It does not represent a live cloud deployment.
 
-If I implement a real cloud or distributed setup, I will also provide version and status output, replication-lag evidence, configuration screenshots with secrets hidden, and restore or failover test results. Without that evidence, I will present this work only as a proposed architecture.
+- `John_Ayinde_301915931_Architecture.png` — proposed application, primary database, replica, MongoDB preferences, monitoring and backup layout.
+- `John_Ayinde_301915931_ReplicationStrategy.png` — primary, read-replica and backup responsibilities, including the synchronous/asynchronous replication trade-off.
+- `John_Ayinde_301915931_ConsistencyTradeoffs.png` — operations that need strong consistency and operations that can tolerate a short delay.
+
+If I add a real cloud setup later, I will keep its configuration, status and failover evidence separate and clearly label what was actually tested.
