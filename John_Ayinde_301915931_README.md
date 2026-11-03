@@ -2,6 +2,10 @@
 
 This repository contains my MIT 8103 Advanced Database Systems portfolio. I used a fictional Landmark Hotel scenario so that I could design and test a realistic reservation database without using real guest or payment information.
 
+## GitHub repository
+
+The full repository is available at [github.com/johnayinde/John_Ayinde_301915931](https://github.com/johnayinde/John_Ayinde_301915931).
+
 The portfolio starts with a PostgreSQL design, then builds on it with query optimisation, transaction and concurrency work, a small MongoDB use case, and a proposed distributed/cloud design.
 
 ## What the system covers
