@@ -1,11 +1,10 @@
 # Portfolio 3 Evidence
 
-I will save the following outputs from the transaction and two-session tests:
-- `John_Ayinde_301915931_CommitDemo.png` — committed test payment visible after COMMIT.
-- `John_Ayinde_301915931_RollbackDemo.png` — temporary update inside transaction and original value after ROLLBACK.
-- `John_Ayinde_301915931_OverlapConstraint.png` — exclusion constraint definition.
-- `John_Ayinde_301915931_SessionACommit.png` — Session A transaction committed.
-- `John_Ayinde_301915931_SessionBConflict.png` — actual Session B result after Session A commit.
-- `John_Ayinde_301915931_Cleanup.png` — cleanup query showing test records removed.
+The following transaction and concurrency outputs are currently included.
 
-If the observed behaviour differs from the expected result, I will document the difference and explain it from the test output.
+- `John_Ayinde_301915931_CommitDemo.png` — committed test payment and reservation work.
+- `John_Ayinde_301915931_RollbackDemo.png` — temporary update and rollback result.
+- `John_Ayinde_301915931_OverlapConstraint.png` — active-reservation overlap constraint.
+- `John_Ayinde_301915931_SessionBConflict.png` — exclusion-constraint error from the conflicting reservation attempt.
+
+Before submission, I still need to add a screenshot of Session A committing and a screenshot showing that the test records were cleaned up.

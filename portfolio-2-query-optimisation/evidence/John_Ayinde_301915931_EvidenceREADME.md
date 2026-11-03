@@ -1,12 +1,10 @@
 # Portfolio 2 Evidence
 
-I will save the following outputs from my own PostgreSQL test run:
+The following PostgreSQL outputs are currently included.
 
-- `John_Ayinde_301915931_BusinessQueries.png` — representative outputs from `John_Ayinde_301915931_BusinessQueries.sql`.
-- `John_Ayinde_301915931_BenchmarkRowCount.png` — output from `John_Ayinde_301915931_BenchmarkSetup.sql` showing row count.
-- `John_Ayinde_301915931_BaselineExplain.png` — full baseline `EXPLAIN (ANALYZE, BUFFERS, VERBOSE)` output.
-- `John_Ayinde_301915931_OptimizedExplain.png` — full plan after index creation.
-- `John_Ayinde_301915931_IndexDefinition.png` — index definition or catalog output.
-- `John_Ayinde_301915931_PerformanceLog.png` — completed comparison table or CSV.
+- `John_Ayinde_301915931_BusinessQueries.png` — representative results from the hotel business queries.
+- `John_Ayinde_301915931_BenchmarkRowCount.png` — benchmark setup output showing the generated data.
+- `John_Ayinde_301915931_BaselineExplain.png` — baseline `EXPLAIN (ANALYZE, BUFFERS, VERBOSE)` output before the test index.
+- `John_Ayinde_301915931_OptimizedExplain.png` — execution plan after the composite index was added.
 
-The screenshots must show the actual PostgreSQL output. I will not use fabricated plans or timing values.
+Before submission, I still need to add an index-definition screenshot and a completed performance-log screenshot based on the measured plan values.
