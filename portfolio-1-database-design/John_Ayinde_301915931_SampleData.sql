@@ -1,4 +1,4 @@
--- Fictional sample data for Portfolio 1.
+-- Fictional records used to test the Portfolio 1 model.
 SET search_path TO landmark_hotel, public;
 
 INSERT INTO guests (first_name, last_name, email, phone) VALUES
@@ -34,7 +34,7 @@ INSERT INTO bookings (booking_reference, guest_id, booking_status, special_reque
 SELECT 'LH-2026-0004', guest_id, 'pending', NULL
 FROM guests WHERE email = 'daniel.adeyemi@example.com';
 
--- Checkout is exclusive: a new stay can begin on the previous guest's checkout date.
+-- Checkout is not part of the occupied range, so another stay can start that day.
 INSERT INTO booking_rooms (booking_id, room_id, check_in, check_out, nightly_rate, reservation_status)
 SELECT b.booking_id, r.room_id, DATE '2026-11-10', DATE '2026-11-13', 45000.00, 'confirmed'
 FROM bookings b CROSS JOIN rooms r

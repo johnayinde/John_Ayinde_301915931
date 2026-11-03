@@ -1,6 +1,5 @@
--- Portfolio 1: Landmark Hotel Reservation System
--- PostgreSQL schema. Sample data is fictional.
--- Run this script in the landmark_hotel_db database.
+-- PostgreSQL structure for the fictional Landmark Hotel reservation system.
+-- Run this file in landmark_hotel_db before loading the sample records.
 
 CREATE SCHEMA IF NOT EXISTS landmark_hotel;
 SET search_path TO landmark_hotel, public;
@@ -68,7 +67,7 @@ CREATE TABLE payments (
     CONSTRAINT ck_currency_uppercase CHECK (currency = upper(currency))
 );
 
--- Helpful foreign-key indexes for common joins and lookups.
+-- These indexes support the joins and lookups used in the portfolio queries.
 CREATE INDEX idx_rooms_room_type_id ON rooms(room_type_id);
 CREATE INDEX idx_bookings_guest_id ON bookings(guest_id);
 CREATE INDEX idx_booking_rooms_booking_id ON booking_rooms(booking_id);
@@ -76,6 +75,4 @@ CREATE INDEX idx_booking_rooms_room_dates ON booking_rooms(room_id, check_in, ch
 CREATE INDEX idx_payments_booking_id ON payments(booking_id);
 CREATE INDEX idx_payments_status ON payments(payment_status);
 
--- Note: date-overlap prevention for concurrent reservations is an advanced
--- PostgreSQL constraint. It is intentionally kept for Portfolio 3 so you can
--- implement and test concurrency controls as a separate assessed activity.
+-- The active-stay overlap rule is added in Portfolio 3, where it is tested with two sessions.
